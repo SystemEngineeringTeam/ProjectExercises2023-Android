@@ -30,7 +30,7 @@ class SensorSendRepository(private val queue: ArrayDeque<HartRatePostData>) {
             //: 3:コピーの一番最新をPOSTする
             val jsonData = pressureCopy.toJsonString() // HartRatePostDataクラスにtoJsonString()メソッドを追加しておく必要があります
 
-            val url = "https://script.google.com/macros/s/AKfycbyNZj6-w094hjblYzDMz4DlXM8g8Xrz8Hk7lRitKe4TdDGgFbdeuXN55bnhejGNo-4S/exec"
+            val url = "https://script.google.com/macros/s/AKfycbxdw0Vz9VAaRPd46X_HLan__gyG5nSZ7AaXvMJkspj4Mr6jzI7u1JuFWzsKKeJ4Pcey/exec"
             httpApi.sendPostRequest(url, jsonData)
             // 指定時間毎に繰り返す
             handler.postDelayed(this, delayMillis)
