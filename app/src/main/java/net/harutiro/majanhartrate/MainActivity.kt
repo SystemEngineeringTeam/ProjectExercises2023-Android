@@ -1,10 +1,12 @@
 package net.harutiro.majanhartrate
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
+import net.harutiro.majanhartrate.Entity.Direction
 import net.harutiro.majanhartrate.Usecase.PermissionUsecase
 import net.harutiro.majanhartrate.Usecase.SensorUsecase
 import net.harutiro.majanhartrate.databinding.ActivityMainBinding
@@ -12,7 +14,6 @@ import net.harutiro.majanhartrate.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    val sensorUsecase = SensorUsecase()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,40 +33,24 @@ class MainActivity : AppCompatActivity() {
             permissions = permissionUsecase.permissionsFileWrite
         )
 
-        sensorUsecase.addSensor(this){
-            binding.hartRateText.text = it.toString()
-        }
-
-        binding.sensingSwitch.setOnCheckedChangeListener { _, isChecked ->
-            if(isChecked){
-                sensorUsecase.start()
-            }else{
-                sensorUsecase.stop()
-            }
-        }
-
-
-        val selectColor = Color.rgb(53,92,79)
-        val notSelectColor = Color.rgb(65,65,65)
-
-        val buttons = listOf(binding.buttonA, binding.buttonB, binding.buttonC, binding.buttonD)
-
+        val buttons = listOf(binding.buttonEast, binding.buttonNorth, binding.buttonSouth, binding.buttonWest)
         for (button in buttons) {
             button.setOnClickListener {
-                SensorUsecase.userId = button.text.toString()
-                buttons.forEach { b ->
-                    b.backgroundTintList = ColorStateList.valueOf(
-                        if (b == button) selectColor else notSelectColor
-                    )
+                if(button.text.toString() == "北"){
+                    SensorUsecase.userId = Direction.NORTH
+                }else if(button.text.toString() == "東"){
+                    SensorUsecase.userId = Direction.EAST
+                }else if(button.text.toString() == "南"){
+                    SensorUsecase.userId = Direction.SOUTH
+                }else if(button.text.toString() == "西"){
+                    SensorUsecase.userId = Direction.WEST
                 }
+
+                val intent = Intent(this, SensingActivity::class.java)
+                startActivity(intent)
             }
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        if(sensorUsecase.sensorStartFlag){
-            sensorUsecase.stop()
-        }
-    }
+
 }

@@ -8,7 +8,7 @@ import kotlinx.serialization.serializer
 data class HartRatePostData (
     val time:Long = 0,
     val heart_rate:Int = 0,
-    val user:String = ""
+    val direction:Direction = Direction.EAST,
 ){
     fun toJsonString(): String {
         return Json.encodeToString(serializer(), this)

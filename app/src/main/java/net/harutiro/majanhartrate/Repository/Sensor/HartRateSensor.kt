@@ -44,7 +44,7 @@ class HartRateSensor(private val context: Context , val listener:HartRateSensorL
             HartRatePostData(
                 time = DateUtils.getTimeStamp(),
                 heart_rate = hartRate.toInt(),
-                user = SensorUsecase.userId
+                direction = SensorUsecase.userId!!
             )
         )
         listener.setOnSensorChangedDisplay(hartRate.toInt())

@@ -16,11 +16,11 @@ class HttpApi {
 
     val TAG = "HttpApi"
 
-    fun sendPostRequest(url: String, jsonData: String) {
+    fun sendPostRequest(url: String) {
         val client = OkHttpClient()
 
         val mediaType = "application/json".toMediaType()
-        val requestBody = RequestBody.create(mediaType, jsonData)
+        val requestBody = RequestBody.create(mediaType, "")
         val request = Request.Builder()
             .url(url)
             .post(requestBody)

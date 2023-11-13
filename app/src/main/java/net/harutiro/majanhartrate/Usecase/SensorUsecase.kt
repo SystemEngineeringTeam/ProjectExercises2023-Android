@@ -2,6 +2,7 @@ package net.harutiro.majanhartrate.Usecase
 
 import android.content.Context
 import net.harutiro.campingsensingwear.Repository.Sensor.SensorBaseInterface
+import net.harutiro.majanhartrate.Entity.Direction
 import net.harutiro.majanhartrate.Repository.Sensor.HartRateSensor
 import net.harutiro.majanhartrate.Repository.SensorRepository
 
@@ -12,7 +13,7 @@ class SensorUsecase {
     var sensorRepository = SensorRepository()
 
     companion object{
-        var userId = ""
+        var userId: Direction? = null
     }
 
 

@@ -10,6 +10,10 @@ import java.io.PrintWriter
 
 class SensorSendRepository(private val queue: ArrayDeque<HartRatePostData>) {
 
+
+    val domain = "https://heartbeat.sysken.net"
+    val path = "/api/v1/set_bpm/"
+
     val httpApi = HttpApi()
 
     // Queueのデータをファイルに保存する周期
@@ -23,15 +27,16 @@ class SensorSendRepository(private val queue: ArrayDeque<HartRatePostData>) {
             val pressureCopy = if(queue.isNotEmpty()){
                 queue[queue.lastIndex]
             }else{
-                HartRatePostData()
+                handler.postDelayed(this, delayMillis)
+                return
             }
             // 2:本体をクリア
             queue.clear()
             //: 3:コピーの一番最新をPOSTする
-            val jsonData = pressureCopy.toJsonString() // HartRatePostDataクラスにtoJsonString()メソッドを追加しておく必要があります
 
-            val url = "https://script.google.com/macros/s/AKfycbxdw0Vz9VAaRPd46X_HLan__gyG5nSZ7AaXvMJkspj4Mr6jzI7u1JuFWzsKKeJ4Pcey/exec"
-            httpApi.sendPostRequest(url, jsonData)
+            val url = domain + path + pressureCopy.direction.value + "?bpm=" + pressureCopy.heart_rate
+
+            httpApi.sendPostRequest(url)
             // 指定時間毎に繰り返す
             handler.postDelayed(this, delayMillis)
         }

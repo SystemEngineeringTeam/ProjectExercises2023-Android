@@ -6,64 +6,44 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/button_north"
+        android:layout_width="48dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sensing_switch">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/button_a"
-                android:layout_width="48dp"
-                android:layout_height="wrap_content"
-                android:text="A" />
-
-            <Button
-                android:id="@+id/button_b"
-                android:layout_width="48dp"
-                android:layout_height="wrap_content"
-                android:text="B" />
-
-            <Button
-                android:id="@+id/button_c"
-                android:layout_width="48dp"
-                android:layout_height="wrap_content"
-                android:text="C" />
-
-            <Button
-                android:id="@+id/button_d"
-                android:layout_width="48dp"
-                android:layout_height="wrap_content"
-                android:text="D" />
-
-        </LinearLayout>
-    </ScrollView>
-
-    <TextView
-        android:id="@+id/hart_rate_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="50"
-        android:textSize="64sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
-
-    <Switch
-        android:id="@+id/sensing_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="センシング開始"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="北"
+        app:layout_constraintBottom_toTopOf="@+id/button_west"
+        app:layout_constraintEnd_toStartOf="@+id/button_south"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_west"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:text="西"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_east"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_north" />
+
+    <Button
+        android:id="@+id/button_south"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:text="南"
+        app:layout_constraintBottom_toTopOf="@+id/button_east"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_north"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_east"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:text="東"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_west"
+        app:layout_constraintTop_toBottomOf="@+id/button_south" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
