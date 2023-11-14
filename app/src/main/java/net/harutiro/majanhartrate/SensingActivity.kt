@@ -3,7 +3,9 @@ package net.harutiro.majanhartrate
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
+import android.widget.Toast
 import net.harutiro.majanhartrate.Usecase.SensorUsecase
+import net.harutiro.majanhartrate.Utils.DirectionUtils
 import net.harutiro.majanhartrate.databinding.ActivityMainBinding
 import net.harutiro.majanhartrate.databinding.ActivitySensingBinding
 
@@ -22,13 +24,22 @@ class SensingActivity : AppCompatActivity() {
         //スリープにさせないコード
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
+        binding.textViewDirection.text = DirectionUtils.direction2String(SensorUsecase.userId!!)
+
         //センサーの値を表示する
-        sensorUsecase.addSensor(this){
-            runOnUiThread {
-                binding.textViewHeartRate.text = it.toString()
-                binding.textViewHeartRate.invalidate()
-            }
-        }
+        sensorUsecase.addSensor(this,
+            function = { item ->
+                runOnUiThread {
+                    binding.textViewHeartRate.text = item.toString()
+                    binding.textViewHeartRate.invalidate()
+                }
+            },
+            toastFunction = {
+                runOnUiThread{
+                    Toast.makeText(this, "送信に失敗しました", Toast.LENGTH_SHORT).show()
+                }
+            },
+        )
 
         //戻るボタンを押したらセンサーを止める
         binding.backButton.setOnClickListener {

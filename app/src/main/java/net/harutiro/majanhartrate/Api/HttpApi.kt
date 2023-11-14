@@ -1,6 +1,7 @@
 package net.harutiro.majanhartrate.Api
 
 import android.util.Log
+import android.widget.Toast
 import net.harutiro.majanhartrate.Entity.HartRatePostData
 import okhttp3.Call
 import okhttp3.Callback
@@ -16,7 +17,7 @@ class HttpApi {
 
     val TAG = "HttpApi"
 
-    fun sendPostRequest(url: String) {
+    fun sendPostRequest(url: String , toastFunction : () -> Unit) {
         val client = OkHttpClient()
 
         val mediaType = "application/json".toMediaType()
@@ -31,6 +32,7 @@ class HttpApi {
                 // リクエスト失敗時の処理
                 // エラーハンドリングを行ってください
                 Log.d(TAG,e.toString())
+                toastFunction()
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -38,11 +40,11 @@ class HttpApi {
                     // リクエスト成功
                     val responseBody = response.body?.string()
                     Log.d(TAG,responseBody.toString())
-
                     // レスポンスの処理
                     // ここで必要なデータを取得するなどの処理を追加してください
                 } else {
                     Log.d(TAG,response.toString())
+                    toastFunction()
                     // リクエスト失敗
                     // エラーハンドリングを行ってください
                 }

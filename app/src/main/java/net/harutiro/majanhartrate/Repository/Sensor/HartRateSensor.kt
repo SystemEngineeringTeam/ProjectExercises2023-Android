@@ -11,7 +11,11 @@ import net.harutiro.majanhartrate.Repository.SensorSendRepository
 import net.harutiro.majanhartrate.Usecase.SensorUsecase
 import net.harutiro.majanhartrate.Utils.DateUtils
 
-class HartRateSensor(private val context: Context , val listener:HartRateSensorListener): SensorEventListener, SensorBaseInterface {
+class HartRateSensor(
+    private val context: Context,
+    private val listener:HartRateSensorListener,
+    private val toastFunction: () -> Unit
+): SensorEventListener, SensorBaseInterface {
 
     private lateinit var sensorManager: SensorManager
     private var hartRateSensor: Sensor? = null
@@ -28,7 +32,7 @@ class HartRateSensor(private val context: Context , val listener:HartRateSensorL
     override fun start() {
         queue.clear()
         sensorManager.registerListener(this, hartRateSensor, SensorManager.SENSOR_DELAY_UI)
-        sensorSendRepository = SensorSendRepository(queue)
+        sensorSendRepository = SensorSendRepository(queue, toastFunction)
         sensorSendRepository?.start()
     }
 

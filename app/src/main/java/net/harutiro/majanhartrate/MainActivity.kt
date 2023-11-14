@@ -9,6 +9,7 @@ import android.view.WindowManager
 import net.harutiro.majanhartrate.Entity.Direction
 import net.harutiro.majanhartrate.Usecase.PermissionUsecase
 import net.harutiro.majanhartrate.Usecase.SensorUsecase
+import net.harutiro.majanhartrate.Utils.DirectionUtils
 import net.harutiro.majanhartrate.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -36,15 +37,7 @@ class MainActivity : AppCompatActivity() {
         val buttons = listOf(binding.buttonEast, binding.buttonNorth, binding.buttonSouth, binding.buttonWest)
         for (button in buttons) {
             button.setOnClickListener {
-                if(button.text.toString() == "北"){
-                    SensorUsecase.userId = Direction.NORTH
-                }else if(button.text.toString() == "東"){
-                    SensorUsecase.userId = Direction.EAST
-                }else if(button.text.toString() == "南"){
-                    SensorUsecase.userId = Direction.SOUTH
-                }else if(button.text.toString() == "西"){
-                    SensorUsecase.userId = Direction.WEST
-                }
+                SensorUsecase.userId = DirectionUtils.string2Direction(button.text.toString())
 
                 val intent = Intent(this, SensingActivity::class.java)
                 startActivity(intent)

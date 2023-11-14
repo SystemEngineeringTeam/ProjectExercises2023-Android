@@ -19,14 +19,15 @@ class SensorUsecase {
 
     var sensorStartFlag = false
 
-    fun addSensor(context: Context, function: (item:Int) -> Unit){
+    fun addSensor(context: Context, function: (item:Int) -> Unit, toastFunction: () -> Unit){
         val hartRateSensor = HartRateSensor(
             context ,
             object: HartRateSensor.HartRateSensorListener{
                 override fun setOnSensorChangedDisplay(item: Int) {
                     function(item)
                 }
-            }
+            },
+            toastFunction
         )
 
         targetSensors.add(hartRateSensor)

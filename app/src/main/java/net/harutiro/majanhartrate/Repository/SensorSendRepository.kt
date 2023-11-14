@@ -8,7 +8,10 @@ import java.io.BufferedWriter
 import java.io.FileWriter
 import java.io.PrintWriter
 
-class SensorSendRepository(private val queue: ArrayDeque<HartRatePostData>) {
+class SensorSendRepository(
+    private val queue: ArrayDeque<HartRatePostData>,
+    val toastFunction : () -> Unit
+) {
 
 
     val domain = "https://heartbeat.sysken.net"
@@ -36,7 +39,7 @@ class SensorSendRepository(private val queue: ArrayDeque<HartRatePostData>) {
 
             val url = domain + path + pressureCopy.direction.value + "?bpm=" + pressureCopy.heart_rate
 
-            httpApi.sendPostRequest(url)
+            httpApi.sendPostRequest(url,toastFunction)
             // 指定時間毎に繰り返す
             handler.postDelayed(this, delayMillis)
         }
